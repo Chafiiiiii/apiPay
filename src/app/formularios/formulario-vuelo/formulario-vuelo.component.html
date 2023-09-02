@@ -1,0 +1,129 @@
+<form [formGroup]="formulario">
+  <mat-card class="form-card p-2">
+    <mat-card-header>
+      <mat-card-title>Formulario de Vuelo</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-4">
+          <mat-form-field>
+            <mat-label>Origen</mat-label>
+            <input
+              matInput
+              placeholder="Origen"
+              formControlName="origen"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option
+                *ngFor="let opcion of opcionesFiltradas | async"
+                [value]="opcion"
+              >
+                {{ opcion }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="formulario.get('origen')!.invalid"
+              >Este campo es obligatorio</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field>
+            <mat-label>Destino</mat-label>
+            <input
+              matInput
+              placeholder="Seleccione Destino"
+              formControlName="destino"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option
+                *ngFor="let opcion of opcionesFiltradas | async"
+                [value]="opcion"
+              >
+                {{ opcion }}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="formulario.get('destino')!.invalid"
+              >Este campo es obligatorio</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Fecha de Vuelo</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="fechaVuelo"
+              (dateChange)="cambiarFecha($event)"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <!-- <mat-error *ngIf="formulario.get('fechavuelo')!.invalid">Este campo es obligatorio</mat-error> -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <br />
+        <mat-card-subtitle>Ingrese Cantidad de Pasajeros</mat-card-subtitle>
+        <div class="col-sm-3">
+          <mat-form-field class="full-width">
+            <mat-label>Adultos</mat-label>
+            <input
+              matInput
+              placeholder="Cantidad de Adultos"
+              type="number"
+              formControlName="adulto"
+            />
+            <mat-error *ngIf="formulario.get('adulto')!.invalid"
+              >Este campo es obligatorio</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field class="full-width">
+            <mat-label>Niños</mat-label>
+            <input
+              matInput
+              placeholder="Cantidad de Niños"
+              type="number"
+              formControlName="nino"
+            />
+            <mat-error *ngIf="formulario.get('nino')!.invalid"
+              >Este campo es obligatorio</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field class="full-width">
+            <mat-label>Infantes</mat-label>
+            <input
+              matInput
+              placeholder="Ingrese cantidad de Infante"
+              type="number"
+              formControlName="infante"
+            />
+            <mat-error *ngIf="formulario.get('infante')!.invalid"
+              >Este campo es obligatorio</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        color="primary"
+        class="form-button fs-5 rounded"
+        (click)="enviarFormulario()"
+      >
+        Buscar Vuelo
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+

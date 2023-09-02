@@ -1,0 +1,132 @@
+<div class="container">
+    <h1>Angular Payment Gateway Page using NGX-Paypal at FreakyJolly.com</h1>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card">
+          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Product 1</h5>
+            <p class="card-text">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+            <button class="btn btn-primary" (click)="
+                    addItemToCart({
+                      id: 1,
+                      name: 'Product 1',
+                      price: defaultPrice
+                    })
+                  ">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Product 2</h5>
+            <p class="card-text">
+              Sed do eiusmod tempor incididunt ut labore et dolore magna
+              aliqua.
+            </p>
+            <button class="btn btn-primary" (click)="
+                    addItemToCart({ id: 2, name: 'Product 2', price: '19.99' })
+                  ">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card">
+          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Product 3</h5>
+            <p class="card-text">
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco
+              laboris nisi ut aliquip ex ea commodo consequat.
+            </p>
+            <button class="btn btn-primary" (click)="
+                    addItemToCart({ id: 3, name: 'Product 3', price: '24.99' })
+                  ">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>Shopping Cart</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Product Name</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Total</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cart">
+              <td>{{ item.name }}</td>
+              <td>{{ item.price }}</td>
+              <td>
+                <button class="btn btn-secondary btn-sm" (click)="removeItemFromCart(item)">
+                  -
+                </button>
+                {{ item.quantity }}
+                <button class="btn btn-secondary btn-sm" (click)="addItemToCart(item)">
+                  +
+                </button>
+              </td>
+              <td>{{ item.price * item.quantity }}</td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="removeItemFromCart(item)">
+                  Remove
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm-6">
+        <h3>Checkout</h3>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="customerName" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" [(ngModel)]="customerEmail" />
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <textarea class="form-control" id="address" rows="3" [(ngModel)]="customerAddress"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="paymentMethod">Payment Method</label>
+          <select class="form-control" id="paymentMethod" [(ngModel)]="selectedPaymentMethod">
+            <option>Credit Card</option>
+            <option>PayPal</option>
+            <option>Bank Transfer</option>
+          </select>
+        </div>
+        <ng-container *ngIf="cart.length; else elseCartHas">
+          <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+        </ng-container>
+        <ng-template #elseCartHas>
+          Select Product
+        </ng-template>
+        <p *ngIf="showSuccess" class="text-success mt-3">
+          Checkout successful! Thank you for your purchase.
+        </p>
+        <p *ngIf="showError" class="text-error mt-3">
+          Payment Failed! .
+        </p>
+      </div>
+    </div>
+  </div>

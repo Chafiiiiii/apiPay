@@ -1,0 +1,169 @@
+<!-- Crear el HTML para el formulario reactivo con Material -->
+<h2>Datos de adultos</h2>
+<div *ngFor="let adulto of adultosF">
+  <form [formGroup]="formulario" class="form-container">
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Nombre" formControlName="nombre">
+              <mat-error *ngIf="formulario.get('nombre')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Apellido" formControlName="apellido">
+              <mat-error *ngIf="formulario.get('apellido')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="full-width" appearance="fill">
+              <mat-label>Fecha de nacimiento</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" (dateChange)="cambiarFecha($event)">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="formulario.get('fechaNacimiento')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Nacionalidad" formControlName="nacionalidad" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let opcion of opcionesFiltradas | async" [value]="opcion">
+                  {{opcion}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="formulario.get('nacionalidad')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Pasaporte" formControlName="pasaporte">
+              <mat-error *ngIf="formulario.get('pasaporte')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="enviarFormulario()">Enviar</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>
+<h2>Datos de niños</h2>
+<div *ngFor="let nino of ninosF">
+  <form [formGroup]="formulario" class="form-container">
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Nombre" formControlName="nombre">
+              <mat-error *ngIf="formulario.get('nombre')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Apellido" formControlName="apellido">
+              <mat-error *ngIf="formulario.get('apellido')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="full-width" appearance="fill">
+              <mat-label>Fecha de nacimiento</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" (dateChange)="cambiarFecha($event)">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="formulario.get('fechaNacimiento')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Nacionalidad" formControlName="nacionalidad" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let opcion of opcionesFiltradas | async" [value]="opcion">
+                  {{opcion}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="formulario.get('nacionalidad')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Pasaporte" formControlName="pasaporte">
+              <mat-error *ngIf="formulario.get('pasaporte')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="enviarFormulario()">Enviar</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>
+<h2>Datos de infantes</h2>
+<div *ngFor="let infante of infantesF">
+  <form [formGroup]="formulario" class="form-container">
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Nombre" formControlName="nombre">
+              <mat-error *ngIf="formulario.get('nombre')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Apellido" formControlName="apellido">
+              <mat-error *ngIf="formulario.get('apellido')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="full-width" appearance="fill">
+              <mat-label>Fecha de nacimiento</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" (dateChange)="cambiarFecha($event)">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="formulario.get('fechaNacimiento')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Nacionalidad" formControlName="nacionalidad" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let opcion of opcionesFiltradas | async" [value]="opcion">
+                  {{opcion}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="formulario.get('nacionalidad')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Pasaporte" formControlName="pasaporte">
+              <mat-error *ngIf="formulario.get('pasaporte')!.invalid">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="enviarFormulario()">Enviar</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

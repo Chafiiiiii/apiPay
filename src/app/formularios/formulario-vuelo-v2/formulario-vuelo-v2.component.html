@@ -1,0 +1,200 @@
+<div class="card form-card p-4 my-4">
+  <form #ventaForm="ngForm" (ngSubmit)="postBusqueda(ventaForm)">
+    <div class="row">
+      <div class="col-md-8 p-auto">
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <div>
+              <label for="origenF">Origen: </label>
+              <select
+                class="form-control"
+                type="text"
+                name="origenF"
+                #origenF="ngModel"
+                [(ngModel)]="origen"
+                (change)="selectOrigen($event)"
+                required
+              >
+                <option value="">...</option>
+                <option *ngFor="let lugar of origenes" value="{{ lugar._id }}">
+                  {{ lugar.Ciudad }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div>
+              <label for="destinoF">Destino: </label>
+              <select
+                class="form-control"
+                type="text"
+                name="destinoF"
+                #destinoF="ngModel"
+                [(ngModel)]="destino"
+                (change)="selectOrigen($event)"
+                required
+              >
+                <option value="">...</option>
+                <option *ngFor="let lugar of destinos" value="{{ lugar._id }}">
+                  {{ lugar.Ciudad }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div>
+              <label for="fechaF">Fecha: </label>
+              <input
+                class="form-control"
+                type="date"
+                name="fechaF"
+                #fechaF="ngModel"
+                [(ngModel)]="fecha"
+                min="{{ today }}"
+                max="{{ maxDate }}"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <input
+          type="hidden"
+          name="pasajerosF"
+          #pasajerosF="ngModel"
+          [(ngModel)]="pasajeros"
+        />
+        <div>
+          <label for="fechaF">Adultos Mayores: </label>
+          <input
+            class="form-control"
+            type="number"
+            name="adultosMayoresF"
+            #adultosF="ngModel"
+            [(ngModel)]="pasajeros.adultos_mayores"
+            (change)="comprobarPasajeros($event)"
+            max="{{ max_adultos_mayores }}"
+          />
+          <small>Los pasajeros mayores a 65 años tienen un 50% de descuento en la compra de su boleto</small>
+        </div>
+        <div *ngIf="errorPasajeros == -1 || errorPasajeros == 2">
+          <label for="fechaF">Adultos: </label>
+          <input
+            class="form-control"
+            type="number"
+            name="adultosF"
+            #adultosF="ngModel"
+            [(ngModel)]="pasajeros.adultos"
+            (change)="comprobarPasajeros($event)"
+            max="{{ max_adultos }}"
+          />
+        </div>
+        <div *ngIf="errorPasajeros == 1">
+          <label for="fechaF">Adultos: </label>
+          <input
+            class="form-control is-invalid"
+            type="number"
+            name="adultosF"
+            #adultosF="ngModel"
+            [(ngModel)]="pasajeros.adultos"
+            (change)="comprobarPasajeros($event)"
+            max="{{ max_adultos }}"
+          />
+          <div class="invalid-feedback">
+            <small>Debe viajar al menos un adulto</small>
+          </div>
+        </div>
+        <div>
+          <label for="fechaF">Niños: </label>
+          <input
+            class="form-control"
+            type="number"
+            name="ninosF"
+            #ninosF="ngModel"
+            [(ngModel)]="pasajeros.ninos"
+            (change)="comprobarPasajeros($event)"
+            max="{{ max_ninos }}"
+          />
+        </div>
+        <div *ngIf="errorPasajeros == -1 || errorPasajeros == 1">
+          <label for="fechaF">Infantes: </label>
+          <input
+            class="form-control"
+            type="number"
+            name="infantesF"
+            #infantesF="ngModel"
+            [(ngModel)]="pasajeros.infantes"
+            (change)="comprobarPasajeros($event)"
+            max="{{ max_infantes }}"
+          />
+        </div>
+        <div *ngIf="errorPasajeros == 2">
+          <label for="fechaF">Infantes: </label>
+          <input
+            class="form-control is-invalid"
+            type="number"
+            name="infantesF"
+            #infantesF="ngModel"
+            [(ngModel)]="pasajeros.infantes"
+            (change)="comprobarPasajeros($event)"
+            max="{{ max_infantes }}"
+          />
+          <div class="invalid-feedback">
+            El numero de infantes no puede ser mayor al numero de adultos
+          </div>
+          <small>Los niños menos a 2 años de edad no pagan ningun cargo por el boleto</small>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <input
+        type="submit"
+        [disabled]="!ventaForm.form.valid || errorPasajeros != -1"
+        value="BUSCAR VUELO"
+        class="form-button fs-5 rounded"
+      />
+    </div>
+  </form>
+  <br />
+  <br />
+  <div class="container" style="--bs-bg-opacity: 0.5; min-width: 75%">
+    <div
+      class="card boleto-card"
+      style="margin-top: 10px; padding: 20px"
+      *ngFor="let vuelo of vuelos"
+    >
+      <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>{{ vuelo.lugar_origen_id.Ciudad }}</h2>
+                    <h4>{{ vuelo.lugar_origen_id.nombreAeropuerto }}</h4>
+                </div>
+                <div class="col-md-4">
+                    <!-- <fa-icon [icon]="faPlane"></fa-icon> -->
+                </div>
+                <div class="col-md-4">
+                    <h2>{{ vuelo.lugar_destino_id.Ciudad }}</h2>
+                    <h4>{{ vuelo.lugar_destino_id.nombreAeropuerto }}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div *ngFor="let precio of vuelo.precios" class="col-md-4 text-end" style="padding:10px;">
+                    <div class="card" style="padding:10px;">
+                        <h2>{{precio.nombre}}</h2>
+                        <h3>$ {{ precio.total }}</h3>
+                        <a class="btn btn-success" style="--bs-bg-opacity: 0.5;" href="/asientos/{{vuelo._id}}-{{precio.nombre}}-{{precio.asiento}}">Comprar</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>  
+      </div>
+      <div class="row">
+        <h5>Distancia aproximada: {{ vuelo.distancia_KM }} KM</h5>
+      </div>
+    </div>
+  </div>
+</div>

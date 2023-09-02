@@ -1,0 +1,12 @@
+footer {
+  background: #0b2343;
+  color: #fff;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

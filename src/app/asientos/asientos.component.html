@@ -1,0 +1,43 @@
+<!-- <p class="display-5">Escoge tus asientos</p> -->
+<form #ventaForm="ngForm" (ngSubmit)="reservarAsientos(ventaForm)">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Escoge tus asientos</h2>
+      <div style="height: 1000px">
+        <si-seatsio-seating-chart [config]="config"></si-seatsio-seating-chart>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h2>Información de los pasajeros</h2>
+      <div *ngIf="pasajeros.adultos_mayores > 0" class="card">
+        <div *ngFor="let pasajeroX of informacionPasajeros.adultos_mayores, index as i">
+          <input type="text" name="nombreP" #nombreP="ngModel" [(ngModel)]="pasajeroX.nombre">
+        </div>
+      </div>
+      <div *ngIf="pasajeros.adultos > 0" class="card">
+        <div *ngFor="let pasajeroX of informacionPasajeros.adultos">
+          <input type="text" name="nombreP" #nombreP="ngModel" [(ngModel)]="pasajeroX.nombre">
+        </div>
+      </div>
+      <div *ngIf="pasajeros.ninos > 0" class="card">
+        <div *ngFor="let pasajeroX of informacionPasajeros.ninos">
+          <input type="text" name="nombreP" #nombreP="ngModel" [(ngModel)]="pasajeroX.nombre">
+        </div>
+      </div>
+      <div *ngIf="pasajeros.infantes > 0" class="card">
+        <div *ngFor="let pasajeroX of informacionPasajeros.infantes">
+          <input type="text" name="nombreP" #nombreP="ngModel" [(ngModel)]="pasajeroX.nombre">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="text-center">
+    <input
+      type="submit"
+      [disabled]="!ventaForm.form.valid"
+      value="BUSCAR VUELO"
+      class="form-button fs-5 rounded"
+    />
+  </div>
+</form>
